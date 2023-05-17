@@ -3,9 +3,12 @@
 self="$(dirname -- "$(realpath -- "$0")")"
 
 set -x
-"$self/fake-lfs-file" 50GB 50000000000 a8a4a68becd624e1bec5f3336c21450fca28048509459094f80ffb5f14ccab5b
-"$self/fake-lfs-file" 51GB 51000000000 7ddcf1fb1c74bf21d235a2c2eb50996ecbf112d82dc5ec38cf69f1550839b690
-"$self/fake-lfs-file" 100GB 100000000000 20a02d68ac090c90dd03eb5ecf471e7200704e9fc982dbc86475188364b89f07
+"$self/fake-lfs-file"   1GB   1GB bc17f06f9d9b5f6f79ca189a1772b1a3a38d6e40c45bec50f9c4f28144efddca
+"$self/fake-lfs-file"  10GB  10GB 1a0a850851f333647936c0a1b4576e7ab90398b9e1ae2faf4bb66ca6b72cf724
+"$self/fake-lfs-file"  40GB  40GB 7c61676b97329a0a0fdcd7fe5d5c95a4fbaeb0e49f83f62bd4aa461393b03255
+"$self/fake-lfs-file"  50GB  50GB a8a4a68becd624e1bec5f3336c21450fca28048509459094f80ffb5f14ccab5b
+"$self/fake-lfs-file"  51GB  51GB 7ddcf1fb1c74bf21d235a2c2eb50996ecbf112d82dc5ec38cf69f1550839b690
+"$self/fake-lfs-file" 100GB 100GB 20a02d68ac090c90dd03eb5ecf471e7200704e9fc982dbc86475188364b89f07
 set +x
 
 # For `git config lfs.activitytimeout 0`, see
