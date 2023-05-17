@@ -4,4 +4,7 @@
 ./fake-lfs-file 51GB 51000000000 7ddcf1fb1c74bf21d235a2c2eb50996ecbf112d82dc5ec38cf69f1550839b690
 ./fake-lfs-file 100GB 100000000000 20a02d68ac090c90dd03eb5ecf471e7200704e9fc982dbc86475188364b89f07
 
-echo "git lfs install; git add .; git commit -m .; git push"
+# For `git config lfs.activitytimeout 0`, see
+# <https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-config.adoc#general-settings>.
+
+echo "git lfs install; git config lfs.activitytimeout 0; git add .; git commit -m .; git push"
