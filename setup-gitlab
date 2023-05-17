@@ -1,0 +1,54 @@
+#!/bin/sh -eu
+
+: "${DOMAIN_SUFFIX=fr.bw-cloud-instance.org}"
+
+: "${AWS_ENDPOINT_URL=https://s3.bwsfs.uni-freiburg.de/}"
+: "$AWS_ACCESS_KEY_ID"
+: "$AWS_SECRET_ACCESS_KEY"
+: "${AWS_REGION=fr-repl}"
+
+: "$BUCKET"
+
+: <<"EOF"
+# Alternative using docker-compose:
+# https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-compose
+
+sudo apt-get install -y docker-compose
+
+sed -i 's/\$GITLAB_HOME/./' docker-compose.yaml
+sed -i "s/gitlab.example.com/$(cat /var/lib/cloud/data/instance-id).$DOMAIN_SUFFIX/" docker-compose.yaml 
+
+sudo compose exec . web cat /etc/gitlab/initial_root_password
+EOF
+
+# https://about.gitlab.com/install/#ubuntu
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
+
+domain="$(cat /var/lib/cloud/data/instance-id).$DOMAIN_SUFFIX"
+sudo EXTERNAL_URL="https://$domain" apt-get install gitlab-ee
+
+sudo tee -a /etc/gitlab/gitlab.rb <<EOF
+
+puma['worker_timeout'] = 600
+
+# https://docs.gitlab.com/ee/administration/object_storage.html
+gitlab_rails['object_store']['enabled'] = true
+gitlab_rails['object_store']['connection'] = {
+   'provider' => 'AWS',
+   'endpoint' => '$AWS_ENDPOINT_URL',
+   'region' => '$AWS_REGION',
+   'aws_access_key_id' => '$AWS_ACCESS_KEY_ID',
+   'aws_secret_access_key' => '$AWS_SECRET_ACCESS_KEY',
+   'bucket' => '$BUCKET',
+}
+gitlab_rails['object_store']['objects']['artifacts']['bucket'] =
+gitlab_rails['object_store']['objects']['external_diffs']['bucket'] =
+gitlab_rails['object_store']['objects']['lfs']['bucket'] =
+gitlab_rails['object_store']['objects']['uploads']['bucket'] =
+gitlab_rails['object_store']['objects']['packages']['bucket'] =
+gitlab_rails['object_store']['objects']['dependency_proxy']['bucket'] =
+gitlab_rails['object_store']['objects']['terraform_state']['bucket'] =
+gitlab_rails['object_store']['objects']['ci_secure_files']['bucket'] =
+gitlab_rails['object_store']['objects']['pages']['bucket'] =
+gitlab_rails['object_store']['connection']['bucket']
+EOF
