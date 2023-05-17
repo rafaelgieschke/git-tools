@@ -1,0 +1,7 @@
+#!/bin/sh -eu
+
+./fake-lfs-file 50GB 50000000000 a8a4a68becd624e1bec5f3336c21450fca28048509459094f80ffb5f14ccab5b
+./fake-lfs-file 51GB 51000000000 7ddcf1fb1c74bf21d235a2c2eb50996ecbf112d82dc5ec38cf69f1550839b690
+./fake-lfs-file 100GB 100000000000 20a02d68ac090c90dd03eb5ecf471e7200704e9fc982dbc86475188364b89f07
+
+echo "git lfs install; git add .; git commit -m .; git push"
