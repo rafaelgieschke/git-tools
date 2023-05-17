@@ -1,0 +1,15 @@
+#!/bin/sh -eu
+
+file="$1"
+size="$2"
+sha256="${3-$(truncate -s "$size" -- "$file" && sha256sum -- "$file" | cut -d" " -f1)}"
+
+lfsDir=".git/lfs/objects/$(printf %.2s "$sha256")/$(printf %.2s "${sha256#??}")/"
+mkdir -p -- "$lfsDir"
+truncate -s "$size" -- "$lfsDir/$sha256"
+
+cat >"$file" <<EOF
+version https://git-lfs.github.com/spec/v1
+oid sha256:$sha256
+size $(stat -c%s -- "$lfsDir/$sha256")
+EOF
