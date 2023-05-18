@@ -72,3 +72,5 @@ gitlab_rails['object_store']['objects']['ci_secure_files']['bucket'] =
 gitlab_rails['object_store']['objects']['pages']['bucket'] =
 gitlab_rails['object_store']['connection']['bucket']
 EOF
+
+sudo gitlab-ctl reconfigure
