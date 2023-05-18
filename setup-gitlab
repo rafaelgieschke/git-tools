@@ -9,6 +9,20 @@
 
 : "$BUCKET"
 
+domain="$(cat /var/lib/cloud/data/instance-id).$DOMAIN_SUFFIX"
+
+case "$0" in /var/lib/cloud/instance/scripts/*)
+   # if grep -q /usr/bin/cloud-init "/proc/$SYSTEMD_EXEC_PID/cmdline"; then
+   # case "$(realpath -- "/proc/$SYSTEMD_EXEC_PID/fd/3")" in /var/log/cloud-init.log)
+   curl -fL https://github.com/emulation-as-a-service/cloud-init-update/raw/main/user-data | sh
+
+   hostnamectl hostname -- "${domain%%-*}"
+   hostnamectl hostname --pretty -- "GitLab: https://$domain $(hostnamectl hostname --pretty)"
+
+   apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y git git-lfs
+   ;;
+esac
+
 : <<"EOF"
 # Alternative using docker-compose:
 # https://docs.gitlab.com/ee/install/docker.html#install-gitlab-using-docker-compose
@@ -24,7 +38,6 @@ EOF
 # https://about.gitlab.com/install/#ubuntu
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 
-domain="$(cat /var/lib/cloud/data/instance-id).$DOMAIN_SUFFIX"
 sudo EXTERNAL_URL="https://$domain" apt-get install gitlab-ee
 
 sudo tee -a /etc/gitlab/gitlab.rb <<EOF
