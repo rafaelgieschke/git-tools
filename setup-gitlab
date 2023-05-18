@@ -42,7 +42,14 @@ sudo EXTERNAL_URL="https://$domain" apt-get install gitlab-ee
 
 sudo tee -a /etc/gitlab/gitlab.rb <<EOF
 
-puma['worker_timeout'] = 600
+# https://docs.gitlab.com/ee/administration/operations/puma.html#change-the-worker-timeout
+# https://www.rubydoc.info/gems/puma/Puma%2FDSL:worker_timeout
+# https://gitlab.com/gitlab-org/omnibus-gitlab/-/issues/6337
+# puma['worker_timeout'] = 600
+
+gitlab_rails['env'] = {
+   'GITLAB_RAILS_RACK_TIMEOUT' => 600
+}
 
 # https://docs.gitlab.com/ee/administration/object_storage.html
 gitlab_rails['object_store']['enabled'] = true
