@@ -5,16 +5,19 @@ self="$(dirname -- "$(realpath -- "$0")")"
 set -x
 "$self/fake-lfs-file"   1GB   1GB bc17f06f9d9b5f6f79ca189a1772b1a3a38d6e40c45bec50f9c4f28144efddca
 "$self/fake-lfs-file"   2GB   2GB 2e0c654b6cba3a1e816726bae0eac481eb7fd0351633768c3c18392e0f02b619
-"$self/fake-lfs-file"   3GB   3GB
-"$self/fake-lfs-file"   4GB   4GB
+"$self/fake-lfs-file"   3GB   3GB 16b29649590001513483bb869fd5b39a6a8d3f2aea76680cea66d3feb21a2243
+"$self/fake-lfs-file"   4GB   4GB ddd45e35df0b676747319e4da247e7dc78b53cb99cba1411f1db51ebf4202efb
+"$self/fake-lfs-file"   5GB   5GB 750f9080de24a9e562c6b1fecc288c732a758003ab16e5cad014eba45c17466b
+"$self/fake-lfs-file"   6GB   6GB a20be6ed59ae744e4e4a75d8189334a459090fd6e565469403bcd86eb9f9ff6f
+"$self/fake-lfs-file"   7GB   7GB 52e56e64da513aa4882ee63dcaf53ebf583c41e85b6ac822c4945bc1561b59b2
 "$self/fake-lfs-file"  10GB  10GB 1a0a850851f333647936c0a1b4576e7ab90398b9e1ae2faf4bb66ca6b72cf724
-"$self/fake-lfs-file"  20GB  20GB
+"$self/fake-lfs-file"  20GB  20GB c3e5d415e2a12e6a97ad47e0027b1b26894f6f163fbf58f9f11e325322e12a9a
 "$self/fake-lfs-file"  40GB  40GB 7c61676b97329a0a0fdcd7fe5d5c95a4fbaeb0e49f83f62bd4aa461393b03255
 "$self/fake-lfs-file"  50GB  50GB a8a4a68becd624e1bec5f3336c21450fca28048509459094f80ffb5f14ccab5b
 "$self/fake-lfs-file"  51GB  51GB 7ddcf1fb1c74bf21d235a2c2eb50996ecbf112d82dc5ec38cf69f1550839b690
-"$self/fake-lfs-file"  52GB  52GB
+"$self/fake-lfs-file"  52GB  52GB 0b93408e00ae0044d1125567baa13a7cd03b540aa48c8139f6c3ea41249559d6
 "$self/fake-lfs-file" 100GB 100GB 20a02d68ac090c90dd03eb5ecf471e7200704e9fc982dbc86475188364b89f07
-"$self/fake-lfs-file" 101GB 101GB
+"$self/fake-lfs-file" 101GB 101GB a7b16809e2f13bc904e4f586f4302394746b2c1ab232d2023e43cc1c90cae7d5
 set +x
 
 # For `git config lfs.activitytimeout 0`, see
