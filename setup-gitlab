@@ -38,7 +38,7 @@ EOF
 # https://about.gitlab.com/install/#ubuntu
 curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash
 
-sudo EXTERNAL_URL="https://$domain" apt-get install gitlab-ee
+sudo EXTERNAL_URL="https://$domain" apt-get install gitlab-ee || :
 
 sudo tee -a /etc/gitlab/gitlab.rb <<EOF
 
