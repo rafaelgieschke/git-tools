@@ -23,4 +23,9 @@ set +x
 # For `git config lfs.activitytimeout 0`, see
 # <https://github.com/git-lfs/git-lfs/blob/main/docs/man/git-lfs-config.adoc#general-settings>.
 
-echo "git lfs install; git config lfs.activitytimeout 0; git add .; git commit -m .; git push"
+cat <<"EOF"
+git lfs install; git config lfs.activitytimeout 0
+export GIT_TRACE=1 GIT_TRANSFER_TRACE=1 GIT_CURL_VERBOSE=1
+
+git add .; git commit -m .; git push
+EOF
