@@ -13,6 +13,18 @@ sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
 /usr/lib/go-1.18/bin/go build
 mv workhorse /opt/gitlab/embedded/bin/gitlab-workhorse
 
+# Alternatively, force GitLab Workhorse to use presigned URLs:
+if false; then
+  file="/opt/gitlab/embedded/service/gitlab-rails/lib/object_storage/direct_upload.rb"; \
+  script='s/def use_workhorse_s3_client\?/a return false/'; \
+  sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
+fi
+
+###############################################################################
+
+# Part sizes above 1 GiB or more than 20 parallel uploads
+# do not improve performance anymore (~ 50 GB in 30 s).
+
 file="/opt/gitlab/embedded/service/gitlab-rails/config/initializers/carrierwave_patch.rb"; \
 script='s/file\.multipart_chunk_size = 10485760/file.multipart_chunk_size = 10485760 \/ 10 * 1024/'; \
 sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
