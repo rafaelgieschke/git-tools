@@ -1,10 +1,11 @@
 #!/bin/sh
 //bin/sh -c :; command -v deno >/dev/null && exec deno run -A "$0" "$@"; exec node "$0" "$@"
 
-// ./test.js download "$url" $sha256sum $sizeBytes
-// ./test.js upload "$url" $(sha256sum file|cut -d" " -f1) $(wc -c file|cut -d" " -f1)
+// ./test.js download "$url" "$sha256sum" "$sizeBytes"
+// ./test.js upload "$url" "$(sha256sum file|cut -d" " -f1)" "$(wc -c file|cut -d" " -f1)"
 
 /*
+url="$(git ls-remote --get-url)"
 truncate -s 50GB file
 ./git-lfs.js "$url" upload a8a4a68becd624e1bec5f3336c21450fca28048509459094f80ffb5f14ccab5b 50000000000
 
