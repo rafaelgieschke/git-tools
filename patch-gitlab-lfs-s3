@@ -21,7 +21,7 @@ mv workhorse /opt/gitlab/embedded/bin/gitlab-workhorse
 # Alternatively, force GitLab Workhorse to use presigned URLs:
 if false; then
   file="/opt/gitlab/embedded/service/gitlab-rails/lib/object_storage/direct_upload.rb"; \
-  script='s/def use_workhorse_s3_client\?/a return false/'; \
+  script='/def use_workhorse_s3_client\?/a return false'; \
   sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
 fi
 
