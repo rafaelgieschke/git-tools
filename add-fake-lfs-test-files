@@ -21,6 +21,7 @@ set -x
 "$self/fake-lfs-file"  57GB  57GB 9fb2d59c1b38d9a5e83ec1d6f0178da9a881a146902287c9fb241d9bd6991c63
 "$self/fake-lfs-file" 100GB 100GB 20a02d68ac090c90dd03eb5ecf471e7200704e9fc982dbc86475188364b89f07
 "$self/fake-lfs-file" 101GB 101GB a7b16809e2f13bc904e4f586f4302394746b2c1ab232d2023e43cc1c90cae7d5
+"$self/fake-lfs-file" 200GB 200GB 7b9359a4ac835afcfd69b7034e998b64bd5c6880595800c5037ac3eab3283483
 set +x
 
 # For `git config lfs.activitytimeout 0`, see
