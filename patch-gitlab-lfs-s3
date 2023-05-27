@@ -3,8 +3,12 @@
 apt install golang-1.18-go
 
 version="$(/opt/gitlab/embedded/bin/gitlab-workhorse -version | grep -Eo 'v[^)]+')"
-git clone --depth=1 --branch="$version" https://gitlab.com/gitlab-org/gitlab
-cd gitlab/workhorse
+
+git clone --no-checkout --depth=1 --branch="$version" https://gitlab.com/gitlab-org/gitlab
+cd gitlab
+git sparse-checkout set /workhorse
+git checkout
+cd workhorse
 
 file="internal/upload/destination/objectstore/s3_object.go"; \
 script='s/s3manager\.NewUploader\(sess\)/s3manager.NewUploader(sess, func(u *s3manager.Uploader) { u.PartSize = 64 * 1024 * 1024 })/'; \
