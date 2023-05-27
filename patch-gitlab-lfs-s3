@@ -11,8 +11,8 @@ git sparse-checkout set /workhorse
 git checkout
 cd workhorse
 
-file="internal/upload/destination/objectstore/s3_object.go"; \
-script='s/s3manager\.NewUploader\(sess\)/s3manager.NewUploader(sess, func(u *s3manager.Uploader) { u.PartSize = 64 * 1024 * 1024 })/'; \
+file="internal/upload/destination/objectstore/s3_object.go"
+script='s/s3manager\.NewUploader\(sess\)/s3manager.NewUploader(sess, func(u *s3manager.Uploader) { u.PartSize = 64 * 1024 * 1024 })/'
 sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
 
 /usr/lib/go-1.18/bin/go build
@@ -20,12 +20,12 @@ mv workhorse /opt/gitlab/embedded/bin/gitlab-workhorse
 
 # Alternatively, force GitLab Workhorse to use presigned URLs:
 if false; then
-  file="/opt/gitlab/embedded/service/gitlab-rails/lib/object_storage/direct_upload.rb"; \
-  script='/def use_workhorse_s3_client\?/a return false'; \
+  file="/opt/gitlab/embedded/service/gitlab-rails/lib/object_storage/direct_upload.rb"
+  script='/def use_workhorse_s3_client\?/a return false'
   sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
 
-  file="/opt/gitlab/embedded/service/gitlab-rails/lib/object_storage/direct_upload.rb"; \
-  script='s/TIMEOUT = 4\.hours/TIMEOUT = 48.hours/'; \
+  file="/opt/gitlab/embedded/service/gitlab-rails/lib/object_storage/direct_upload.rb"
+  script='s/TIMEOUT = 4\.hours/TIMEOUT = 48.hours/'
   sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
 fi
 
@@ -34,10 +34,10 @@ fi
 # Part sizes above 1 GiB or more than 20 parallel uploads
 # do not improve performance anymore (~ 50 GB in 30 s).
 
-file="/opt/gitlab/embedded/service/gitlab-rails/config/initializers/carrierwave_patch.rb"; \
-script='s/file\.multipart_chunk_size = 10485760$/file.multipart_chunk_size = 10485760 \/ 10 * 1024 # 1 GiB/'; \
+file="/opt/gitlab/embedded/service/gitlab-rails/config/initializers/carrierwave_patch.rb"
+script='s/file\.multipart_chunk_size = 10485760$/file.multipart_chunk_size = 10485760 \/ 10 * 1024 # 1 GiB/'
 sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
 
-file="/opt/gitlab/embedded/service/gitlab-rails/config/initializers/carrierwave_patch.rb"; \
-script='s/file\.concurrency = 10$/file.concurrency = 20/'; \
+file="/opt/gitlab/embedded/service/gitlab-rails/config/initializers/carrierwave_patch.rb"
+script='s/file\.concurrency = 10$/file.concurrency = 20/'
 sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
