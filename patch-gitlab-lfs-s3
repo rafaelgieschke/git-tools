@@ -23,6 +23,10 @@ if false; then
   file="/opt/gitlab/embedded/service/gitlab-rails/lib/object_storage/direct_upload.rb"; \
   script='/def use_workhorse_s3_client\?/a return false'; \
   sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
+
+  file="/opt/gitlab/embedded/service/gitlab-rails/lib/object_storage/direct_upload.rb"; \
+  script='s/TIMEOUT = 4\.hours/TIMEOUT = 48.hours/'; \
+  sed -E -i.orig -- "$script" "$file" && ! diff -u -- "$file.orig" "$file"
 fi
 
 ###############################################################################
