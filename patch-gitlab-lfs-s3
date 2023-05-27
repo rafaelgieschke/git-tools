@@ -3,6 +3,7 @@
 apt install golang-1.18-go
 
 version="$(/opt/gitlab/embedded/bin/gitlab-workhorse -version | grep -Eo 'v[^)]+')"
+# commit="$(/usr/lib/go-1.18/bin/go version -m /opt/gitlab/embedded/bin/gitlab-workhorse | sed -En 's/.*vcs.revision=(.+)$/\1/p')"
 
 git clone --no-checkout --depth=1 --branch="$version" https://gitlab.com/gitlab-org/gitlab
 cd gitlab
